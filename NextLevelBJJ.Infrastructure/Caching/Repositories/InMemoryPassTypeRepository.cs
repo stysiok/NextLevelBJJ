@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NextLevelBJJ.Application.Caching.Repositories
+namespace NextLevelBJJ.Infrastructure.Caching.Repositories
 {
     public class InMemoryPassTypeRepository : IPassTypesRepository
     {
@@ -28,7 +28,7 @@ namespace NextLevelBJJ.Application.Caching.Repositories
         {
             var passType = await GetPassTypeAsync(id);
 
-            if(passType is null)
+            if (passType is null)
             {
                 return;
             }
@@ -36,7 +36,7 @@ namespace NextLevelBJJ.Application.Caching.Repositories
             _passTypes.Remove(passType);
         }
 
-        public async Task<PassType> GetPassTypeAsync(Guid id) 
+        public async Task<PassType> GetPassTypeAsync(Guid id)
             => await Task.FromResult(_passTypes.SingleOrDefault(pt => pt.Id == id));
     }
 }
