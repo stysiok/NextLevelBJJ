@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NextLevelBJJ.Infrastructure.Caching.Repositories
 {
-    public class InMemoryPassTypeRepository : IPassTypesRepository
+    public class InMemoryPassTypeRepository : IPassTypeRepository
     {
         private readonly List<PassType> _passTypes = new List<PassType>
         {

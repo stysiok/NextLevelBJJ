@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NextLevelBJJ.Core.Repositories
 {
-    public interface IPassTypesRepository
+    public interface IPassTypeRepository
     {
         Task<PassType> GetPassTypeAsync(Guid id);
         Task AddPassTypeAsync(PassType passType);
