@@ -1,6 +1,6 @@
 ﻿namespace NextLevelBJJ.Application
 {
-    public interface ICommand
+    public interface IQuery<T>
     {
     }
 }
