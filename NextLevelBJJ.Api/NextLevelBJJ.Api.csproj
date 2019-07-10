@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NextLevelBJJ.Application\NextLevelBJJ.Application.csproj" />
+    <ProjectReference Include="..\NextLevelBJJ.Infrastructure\NextLevelBJJ.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

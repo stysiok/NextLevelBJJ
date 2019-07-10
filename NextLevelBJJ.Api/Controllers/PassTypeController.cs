@@ -24,7 +24,7 @@ namespace NextLevelBJJ.Api.Controllers
         {
             await _dispatcher.SendAsync(command);
 
-            return Created($"api/passtypes/{command.Id}", null);
+            return Created($"api/passtype/{command.Id}", null);
         }
     }
 }

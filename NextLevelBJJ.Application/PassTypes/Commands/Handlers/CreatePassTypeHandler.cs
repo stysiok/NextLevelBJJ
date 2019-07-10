@@ -17,7 +17,7 @@ namespace NextLevelBJJ.Application.PassTypes.Commands.Handlers
 
         public async Task HandleAsync(CreatePassType command)
         {
-            //await _passTypeRepository.AddPassTypeAsync(passType);
+            
         }
     }
 }
