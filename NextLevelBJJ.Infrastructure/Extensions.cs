@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NextLevelBJJ.Application;
+using NextLevelBJJ.Core.Repositories;
+using NextLevelBJJ.Infrastructure.Caching.Repositories;
 using NextLevelBJJ.Infrastructure.Dispatchers;
 using System;
 
@@ -18,6 +20,7 @@ namespace NextLevelBJJ.Infrastructure
             }
 
             services.AddSingleton<IDispatcher, InMemoryDispatcher>();
+            services.AddSingleton<IPassTypeRepository, InMemoryPassTypeRepository>();
 
             services.Scan(s => s.FromAssemblyOf<ICommand>()
                                 .AddClasses(c => c.AssignableTo(typeof(ICommandHandler<>)))
