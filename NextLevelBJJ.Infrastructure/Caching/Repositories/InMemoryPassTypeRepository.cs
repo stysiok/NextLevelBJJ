@@ -17,16 +17,16 @@ namespace NextLevelBJJ.Infrastructure.Caching.Repositories
             new PassType(Guid.NewGuid(), "Dzieci", 70m, 8, false)
         };
 
-        public async Task AddPassTypeAsync(PassType passType)
+        public async Task AddAsync(PassType passType)
         {
             _passTypes.Add(passType);
 
             await Task.CompletedTask;
         }
 
-        public async Task DeletePassTypeAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
-            var passType = await GetPassTypeAsync(id);
+            var passType = await GetAsync(id);
 
             if (passType is null)
             {
@@ -36,7 +36,10 @@ namespace NextLevelBJJ.Infrastructure.Caching.Repositories
             _passTypes.Remove(passType);
         }
 
-        public async Task<PassType> GetPassTypeAsync(Guid id)
+        public async Task<IEnumerable<PassType>> GetAsync()
+            => await Task.FromResult(_passTypes);
+
+        public async Task<PassType> GetAsync(Guid id)
             => await Task.FromResult(_passTypes.SingleOrDefault(pt => pt.Id == id));
     }
 }

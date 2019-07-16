@@ -8,8 +8,9 @@ namespace NextLevelBJJ.Core.Repositories
 {
     public interface IPassTypeRepository
     {
-        Task<PassType> GetPassTypeAsync(Guid id);
-        Task AddPassTypeAsync(PassType passType);
-        Task DeletePassTypeAsync(Guid id);
+        Task<IEnumerable<PassType>> GetAsync();
+        Task<PassType> GetAsync(Guid id);
+        Task AddAsync(PassType passType);
+        Task DeleteAsync(Guid id);
     }
 }

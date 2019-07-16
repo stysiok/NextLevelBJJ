@@ -10,11 +10,11 @@ namespace NextLevelBJJ.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class PassTypeController : ControllerBase
+    public class PassTypesController : ControllerBase
     {
         private readonly IDispatcher _dispatcher;
 
-        public PassTypeController(IDispatcher dispatcher)
+        public PassTypesController(IDispatcher dispatcher)
         {
             _dispatcher = dispatcher;
         }
