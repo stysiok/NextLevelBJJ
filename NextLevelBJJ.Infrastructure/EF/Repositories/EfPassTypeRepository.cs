@@ -18,6 +18,7 @@ namespace NextLevelBJJ.Infrastructure.EF.Repositories
         public async Task AddAsync(PassType passType)
         {
             await _context.PassTypes.AddAsync(passType);
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(Guid id)
@@ -30,6 +31,7 @@ namespace NextLevelBJJ.Infrastructure.EF.Repositories
             }
 
             _context.PassTypes.Remove(passType);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<PassType> GetAsync(Guid id)

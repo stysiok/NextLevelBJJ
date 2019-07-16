@@ -1,12 +1,15 @@
 @url = http://localhost:2243
 
 ###
-POST {{url}}/api/passtype
+POST {{url}}/api/passtypes
 Content-Type: application/json
 
 {
-    "name": "Product 2",
-    "category": "phones",
-    "description": "lorem ipsum",
-    "price": 250
+    "name": "Wiele wejść",
+    "price": 250,
+    "entries": 1000,
+    "isOpen": true
 }
+
+###
+GET {{url}}/api/passtypes

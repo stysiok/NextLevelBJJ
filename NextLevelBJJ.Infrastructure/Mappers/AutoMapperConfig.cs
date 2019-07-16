@@ -14,6 +14,7 @@ namespace NextLevelBJJ.Infrastructure.Mappers
             {
                 cfg.CreateMap<PassTypeDto, PassType>();
                 cfg.CreateMap<CreatePassType, PassTypeDto>();
+                cfg.CreateMap<PassType, PassTypeDto>();
             }).CreateMapper());
 
             return services;

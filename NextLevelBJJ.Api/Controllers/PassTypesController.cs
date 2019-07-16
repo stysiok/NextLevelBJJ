@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NextLevelBJJ.Application;
 using NextLevelBJJ.Application.PassTypes.Commands;
+using NextLevelBJJ.Application.PassTypes.DTO;
+using NextLevelBJJ.Application.PassTypes.Queries;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace NextLevelBJJ.Api.Controllers
@@ -25,10 +28,10 @@ namespace NextLevelBJJ.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<ActionResult<IEnumerable<PassTypeDto>>> Get([FromQuery]GetPassTypes command)
         {
-            //var result = await _dispatcher.QueryAsync<>
-            return Ok();
+            var result = await _dispatcher.QueryAsync(command);
+            return Ok(result);
         }
     }
 }

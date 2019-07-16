@@ -7,7 +7,12 @@ namespace NextLevelBJJ.Application.PassTypes.Queries
 {
     public class GetPassTypes : IQuery<IEnumerable<PassTypeDto>>
     {
-        public decimal? Price { get; set; }
-        public int? Entries { get; set; }
+        public decimal? MinPrice { get; set; }
+        public decimal? MaxPrice { get; set; }
+        public int? MinEntries { get; set; }
+        public int? MaxEntries { get; set; }
+        public string Name { get; set; }
+        public bool IsOpen { get; set; }
+
     }
 }

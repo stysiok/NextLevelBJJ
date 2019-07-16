@@ -20,8 +20,4 @@
     <ProjectReference Include="..\NextLevelBJJ.Core\NextLevelBJJ.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="EF\Queries\" />
-  </ItemGroup>
-
 </Project>
