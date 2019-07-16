@@ -6,14 +6,22 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.2.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.2.0" />
     <PackageReference Include="Scrutor" Version="3.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\NextLevelBJJ.Application\NextLevelBJJ.Application.csproj" />
     <ProjectReference Include="..\NextLevelBJJ.Core\NextLevelBJJ.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="EF\Queries\" />
   </ItemGroup>
 
 </Project>

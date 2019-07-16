@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NextLevelBJJ.Application;
 using NextLevelBJJ.Application.PassTypes.Commands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace NextLevelBJJ.Api.Controllers
@@ -20,11 +17,18 @@ namespace NextLevelBJJ.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post(CreatePassType command)
+        public async Task<IActionResult> Post(CreatePassType command)
         {
             await _dispatcher.SendAsync(command);
 
             return Created($"api/passtype/{command.Id}", null);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            //var result = await _dispatcher.QueryAsync<>
+            return Ok();
         }
     }
 }

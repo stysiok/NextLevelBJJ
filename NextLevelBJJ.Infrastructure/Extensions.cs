@@ -4,6 +4,7 @@ using NextLevelBJJ.Application;
 using NextLevelBJJ.Core.Repositories;
 using NextLevelBJJ.Infrastructure.Caching.Repositories;
 using NextLevelBJJ.Infrastructure.Dispatchers;
+using NextLevelBJJ.Infrastructure.EF;
 using NextLevelBJJ.Infrastructure.Mappers;
 using System;
 
@@ -23,6 +24,8 @@ namespace NextLevelBJJ.Infrastructure
             services.AddSingleton<IDispatcher, InMemoryDispatcher>();
             services.AddSingleton<IPassTypeRepository, InMemoryPassTypeRepository>();
             services.AddMapper();
+
+            services.AddEntityFramework();
 
             services.Scan(s => s.FromAssemblyOf<ICommand>()
                                 .AddClasses(c => c.AssignableTo(typeof(ICommandHandler<>)))
