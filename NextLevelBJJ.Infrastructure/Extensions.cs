@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using NextLevelBJJ.Application;
 using NextLevelBJJ.Core.Repositories;
+using NextLevelBJJ.Infrastructure.Auth;
 using NextLevelBJJ.Infrastructure.Caching.Repositories;
 using NextLevelBJJ.Infrastructure.Dispatchers;
 using NextLevelBJJ.Infrastructure.EF;
@@ -23,7 +24,9 @@ namespace NextLevelBJJ.Infrastructure
 
             services.AddSingleton<IDispatcher, InMemoryDispatcher>();
             services.AddSingleton<IPassTypeRepository, InMemoryPassTypeRepository>();
+
             services.AddMapper();
+            services.AddJwt();
 
             services.AddEntityFramework();
 

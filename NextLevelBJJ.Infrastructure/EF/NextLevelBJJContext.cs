@@ -12,6 +12,7 @@ namespace NextLevelBJJ.Infrastructure.EF
         private readonly IOptions<EfOptions> _options;
 
         public DbSet<PassType> PassTypes { get; set; }
+        public DbSet<Student> Students { get; set; }
 
         public NextLevelBJJContext(IOptions<EfOptions> options)
         {

@@ -19,6 +19,7 @@ namespace NextLevelBJJ.Infrastructure.EF
             }
 
             services.AddTransient<IPassTypeRepository, EfPassTypeRepository>();
+            services.AddTransient<IStudentRepository, EfStudentRepository>();
 
             services.Configure<EfOptions>(configuration.GetSection("ef"));
             services.AddEntityFrameworkSqlServer()

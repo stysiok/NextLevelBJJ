@@ -7,6 +7,7 @@ namespace NextLevelBJJ.Core.Entities
     public class Student
     {
         public Guid Id { get; private set; }
+        public string Role { get; private set; }
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
         public string PassCode { get; private set; }

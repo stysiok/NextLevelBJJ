@@ -45,6 +45,7 @@ namespace NextLevelBJJ.Api
             }
 
             //app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseMvc();
         }
     }
