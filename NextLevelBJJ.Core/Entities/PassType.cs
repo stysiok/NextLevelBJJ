@@ -1,10 +1,11 @@
-﻿using System;
+﻿using NextLevelBJJ.Core.Entities.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace NextLevelBJJ.Core.Entities
 {
-    public class PassType
+    public class PassType : IAuditFields, IActiviteFields
     {
         public Guid Id { get; private set; }
         public string Name { get; private set; }
@@ -22,7 +23,7 @@ namespace NextLevelBJJ.Core.Entities
             SetName(name);
             SetPrice(price);
             SetEntries(entries);
-            SetIsOpen(isOpen);
+            IsOpen = isOpen;
         }
         private void SetName(string name)
         {
@@ -52,11 +53,6 @@ namespace NextLevelBJJ.Core.Entities
             }
 
             Entries = entries;
-        }
-
-        private void SetIsOpen(bool isOpen)
-        {
-            IsOpen = isOpen;
         }
     }
 }

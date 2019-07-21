@@ -1,9 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using NextLevelBJJ.Core.Entities;
+using NextLevelBJJ.Core.Entities.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace NextLevelBJJ.Infrastructure.EF
 {
@@ -30,6 +35,23 @@ namespace NextLevelBJJ.Infrastructure.EF
             {
                 optionsBuilder.UseInMemoryDatabase("NextLevelBJJ");
             }
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            Extension.AddShadowProperties(modelBuilder);
+
+            base.OnModelCreating(modelBuilder);
+        }
+
+        public override int SaveChanges()
+        {
+            return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            return base.SaveChangesAsync(cancellationToken);
         }
     }
 }
