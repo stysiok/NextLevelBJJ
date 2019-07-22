@@ -13,7 +13,7 @@ using System.Text;
 
 namespace NextLevelBJJ.Infrastructure.EF
 {
-    internal static class Extension
+    internal static class Extensions
     {
         public static IServiceCollection AddEntityFramework(this IServiceCollection services)
         {

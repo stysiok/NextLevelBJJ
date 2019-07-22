@@ -22,8 +22,7 @@ namespace NextLevelBJJ.Infrastructure
                 configuration = serviceProvider.GetService<IConfiguration>();
             }
 
-            services.AddSingleton<IDispatcher, InMemoryDispatcher>();
-            services.AddSingleton<IPassTypeRepository, InMemoryPassTypeRepository>();
+            services.AddSingleton<IDispatcher, Dispatcher>();
 
             services.AddMapper();
             services.AddJwt();

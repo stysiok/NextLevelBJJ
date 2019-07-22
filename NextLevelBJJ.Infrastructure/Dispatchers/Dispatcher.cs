@@ -7,11 +7,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace NextLevelBJJ.Infrastructure.Dispatchers
 {
-    public class InMemoryDispatcher : IDispatcher
+    public class Dispatcher : IDispatcher
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public InMemoryDispatcher(IServiceProvider serviceProvider)
+        public Dispatcher(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }
