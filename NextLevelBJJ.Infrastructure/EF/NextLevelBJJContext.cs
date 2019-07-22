@@ -15,13 +15,15 @@ namespace NextLevelBJJ.Infrastructure.EF
     public class NextLevelBJJContext : DbContext
     {
         private readonly IOptions<EfOptions> _options;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public DbSet<PassType> PassTypes { get; set; }
         public DbSet<Student> Students { get; set; }
 
-        public NextLevelBJJContext(IOptions<EfOptions> options)
+        public NextLevelBJJContext(IOptions<EfOptions> options, IHttpContextAccessor httpContextAccessor)
         {
             _options = options;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -46,11 +48,13 @@ namespace NextLevelBJJ.Infrastructure.EF
 
         public override int SaveChanges()
         {
+            ChangeTracker.SetShadowProperties(_httpContextAccessor);
             return base.SaveChanges();
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
+            ChangeTracker.SetShadowProperties(_httpContextAccessor);
             return base.SaveChangesAsync(cancellationToken);
         }
     }

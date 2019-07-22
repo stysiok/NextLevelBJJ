@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NextLevelBJJ.Core.Entities;
@@ -31,6 +33,8 @@ namespace NextLevelBJJ.Infrastructure.EF
                 .AddEntityFrameworkInMemoryDatabase()
                 .AddDbContext<NextLevelBJJContext>();
 
+            services.AddHttpContextAccessor();
+
             return services;
         }
 
@@ -54,20 +58,54 @@ namespace NextLevelBJJ.Infrastructure.EF
             }
         }
 
+        public static void SetShadowProperties(this ChangeTracker changeTracker, IHttpContextAccessor httpContextAccessor)
+        {
+            changeTracker.DetectChanges();
+
+            var timestamp = DateTime.UtcNow;
+            var currentUserId = httpContextAccessor.HttpContext.User?.Identity?.IsAuthenticated == true ? 
+                Guid.Parse(httpContextAccessor.HttpContext.User.Identity.Name) : Guid.Empty;
+
+            foreach(var entry in changeTracker.Entries())
+            {
+                if(entry.Entity is IAuditFields)
+                {
+                    if (entry.State == EntityState.Added || entry.State == EntityState.Modified)
+                    {
+                        entry.Property("ModifiedDate").CurrentValue = timestamp;
+                        entry.Property("ModifiedBy").CurrentValue = currentUserId;
+                    }
+
+                    if(entry.State == EntityState.Added)
+                    {
+                        entry.Property("CreatedDate").CurrentValue = timestamp;
+                        entry.Property("CreatedBy").CurrentValue = currentUserId;
+                    }
+                }
+
+                if(entry.Entity is IActiviteFields && entry.State == EntityState.Deleted)
+                {
+                    entry.State = EntityState.Modified;
+                    entry.Property("IsActive").CurrentValue = false;
+                }
+
+            }
+        }
+
         private static readonly MethodInfo SetIsActiveShadowPropertyMethodInfo = 
-            typeof(Extensions).GetMethods(BindingFlags.Public | BindingFlags.Static)
+            typeof(Extensions).GetMethods(BindingFlags.NonPublic | BindingFlags.Static)
             .Single(t => t.IsGenericMethod && t.Name == "SetIsActiveShadowProperty");
 
-        public static void SetIsActiveShadowProperty<T>(ModelBuilder builder) where T : class, IActiviteFields
+        private static void SetIsActiveShadowProperty<T>(ModelBuilder builder) where T : class, IActiviteFields
         {
             builder.Entity<T>().Property<bool>("IsActive");
         }
 
         private static readonly MethodInfo SetAuditShadowPropertiesMethodInfo =
-            typeof(Extensions).GetMethods(BindingFlags.Public | BindingFlags.Static)
+            typeof(Extensions).GetMethods(BindingFlags.NonPublic | BindingFlags.Static)
             .Single(t => t.IsGenericMethod && t.Name == "SetAuditShadowProperties");
 
-        public static void SetAuditShadowProperties<T>(ModelBuilder builder) where T : class, IActiviteFields
+        private static void SetAuditShadowProperties<T>(ModelBuilder builder) where T : class, IActiviteFields
         {
             builder.Entity<T>().Property<DateTime>("CreatedDate").HasDefaultValueSql("GetUtcDate()");
             builder.Entity<T>().Property<DateTime>("ModifiedDate").HasDefaultValueSql("GetUtcDate()");
