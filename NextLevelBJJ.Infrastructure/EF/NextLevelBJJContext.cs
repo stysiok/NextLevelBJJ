@@ -41,7 +41,8 @@ namespace NextLevelBJJ.Infrastructure.EF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            Extensions.AddShadowProperties(modelBuilder);
+            modelBuilder.AddShadowProperties();
+
 
             base.OnModelCreating(modelBuilder);
         }
