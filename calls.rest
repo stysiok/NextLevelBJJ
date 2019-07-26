@@ -13,3 +13,11 @@ Content-Type: application/json
 
 ###
 GET {{url}}/api/passtypes
+
+###
+POST {{url}}/api/students/sign-in
+Content-Type: application/json
+
+{
+    "Id": "233dd7e0-23a0-47b1-849c-d3b3ee9e4afe"
+}
