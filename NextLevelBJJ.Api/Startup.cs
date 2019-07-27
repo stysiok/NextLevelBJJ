@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NextLevelBJJ.Infrastructure;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace NextLevelBJJ.Api
 {
@@ -32,6 +33,13 @@ namespace NextLevelBJJ.Api
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Application.IValidator>());
 
             services.AddInfrastructure();
+
+            services.AddSwaggerGen(s => s.SwaggerDoc("alpha", new Info
+            {
+                Title = "Next Level BJJ",
+                Description = "Next Level BJJ is an academy of Brazilian Jiu Jitsu originated in Opole, Poland.",
+                Version = "alpha"
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +48,8 @@ namespace NextLevelBJJ.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(s => s.SwaggerEndpoint("/swagger/alpha/swagger.json", "Next Level BJJ API"));
             }
             else
             {
