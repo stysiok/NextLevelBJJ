@@ -1,4 +1,4 @@
-@url = http://localhost:2243
+@url = http://localhost:5000
 
 ###
 POST {{url}}/api/passtypes
