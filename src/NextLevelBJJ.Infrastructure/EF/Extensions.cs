@@ -34,7 +34,7 @@ namespace NextLevelBJJ.Infrastructure.EF
                 .AddEntityFrameworkInMemoryDatabase()
                 .AddDbContext<NextLevelBJJContext>();
 
-            if (configuration.GetSection("ef").GetValue<bool>("inMemory"))
+            if (configuration.GetSection("ef").GetValue<bool>("seedData"))
             {
                 services.SeedData();
             }
