@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using AutoFixture;
+using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
@@ -17,10 +18,12 @@ namespace NextLevelBJJ.Tests.Integration.Controllers
     public class PassTypesControllerTests : IClassFixture<WebApplicationFactory<Startup>>
     {
         private readonly WebApplicationFactory<Startup> _factory;
+        private readonly Fixture _fixture;
 
         public PassTypesControllerTests(WebApplicationFactory<Startup> factory)
         {
             _factory = factory.WithWebHostBuilder(b => b.UseEnvironment("test"));
+            _fixture = new Fixture();
         }
 
         [Fact]
@@ -42,21 +45,14 @@ namespace NextLevelBJJ.Tests.Integration.Controllers
         {
             var httpClient = _factory.CreateClient();
 
-            var passTypeToCreate = new PassTypeDto
-            {
-                Id = Guid.NewGuid(),
-                Entries = 1,
-                IsOpen = false,
-                Name = "PassTypeTest",
-                Price = 20m
-            };
-            var stringContent = new StringContent(JsonConvert.SerializeObject(passTypeToCreate), Encoding.UTF8, "application/json");
+            var passTypeFixture = _fixture.Create<PassTypeDto>();
+            var stringContent = new StringContent(JsonConvert.SerializeObject(passTypeFixture), Encoding.UTF8, "application/json");
 
             var response = await httpClient.PostAsync("api/passtypes", stringContent);
 
             response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.Created);
-            response.Headers.Location.Should().Equals($"api/passtypes/{passTypeToCreate.Id}");
+            response.Headers.Location.Should().Equals($"api/passtypes/{passTypeFixture.Id}");
         }
     }
 }
