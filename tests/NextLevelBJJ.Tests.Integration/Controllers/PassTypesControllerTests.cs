@@ -4,7 +4,11 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using NextLevelBJJ.Api;
 using NextLevelBJJ.Application.PassTypes.DTO;
+using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -31,6 +35,28 @@ namespace NextLevelBJJ.Tests.Integration.Controllers
             var passTypes = JsonConvert.DeserializeObject<IEnumerable<PassTypeDto>>(content);
 
             passTypes.Should().BeEmpty();
+        }
+
+        [Fact]
+        public async Task create_passType_should_create_passType()
+        {
+            var httpClient = _factory.CreateClient();
+
+            var passTypeToCreate = new PassTypeDto
+            {
+                Id = Guid.NewGuid(),
+                Entries = 1,
+                IsOpen = false,
+                Name = "PassTypeTest",
+                Price = 20m
+            };
+            var stringContent = new StringContent(JsonConvert.SerializeObject(passTypeToCreate), Encoding.UTF8, "application/json");
+
+            var response = await httpClient.PostAsync("api/passtypes", stringContent);
+
+            response.EnsureSuccessStatusCode();
+            response.StatusCode.Should().Be(HttpStatusCode.Created);
+            response.Headers.Location.Should().Equals($"api/passtypes/{passTypeToCreate.Id}");
         }
     }
 }
