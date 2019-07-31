@@ -46,6 +46,7 @@ namespace NextLevelBJJ.Tests.Integration.Controllers
             var httpClient = _factory.CreateClient();
 
             var passTypeFixture = _fixture.Create<PassTypeDto>();
+
             var stringContent = new StringContent(JsonConvert.SerializeObject(passTypeFixture), Encoding.UTF8, "application/json");
 
             var response = await httpClient.PostAsync("api/passtypes", stringContent);
@@ -53,6 +54,31 @@ namespace NextLevelBJJ.Tests.Integration.Controllers
             response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.Created);
             response.Headers.Location.Should().Equals($"api/passtypes/{passTypeFixture.Id}");
+        }
+
+        [Fact]
+        public async Task get_passType_should_return_passType()
+        {
+            var httpClient = _factory.CreateClient();
+
+            var passTypeFixture = _fixture.Create<PassTypeDto>();
+
+            var stringContent = new StringContent(JsonConvert.SerializeObject(passTypeFixture), Encoding.UTF8, "application/json");
+
+            var postResponse = await httpClient.PostAsync("api/passtypes", stringContent);
+
+            postResponse.EnsureSuccessStatusCode();
+            postResponse.StatusCode.Should().Be(HttpStatusCode.Created);
+
+            var response = await httpClient.GetAsync(postResponse.Headers.Location);
+
+            response.EnsureSuccessStatusCode();
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            var passTypeResponse = JsonConvert.DeserializeObject<PassTypeDto>(stringResponse);
+
+            passTypeResponse.Should().Equals(passTypeFixture);
         }
     }
 }

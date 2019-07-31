@@ -19,19 +19,33 @@ namespace NextLevelBJJ.Api.Controllers
             _dispatcher = dispatcher;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post(CreatePassType command)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<PassTypeDto>> Get([FromRoute]GetPassType command)
         {
-            await _dispatcher.SendAsync(command);
+            var result = await _dispatcher.QueryAsync(command);
+            
+            if(result == null)
+            {
+                return NotFound();
+            }
 
-            return Created($"api/passtype/{command.Id}", null);
+            return Ok(result);
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PassTypeDto>>> Get([FromQuery]GetPassTypes command)
         {
             var result = await _dispatcher.QueryAsync(command);
+
             return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post(CreatePassType command)
+        {
+            await _dispatcher.SendAsync(command);
+
+            return Created($"api/passtypes/{command.Id}", null);
         }
     }
 }
