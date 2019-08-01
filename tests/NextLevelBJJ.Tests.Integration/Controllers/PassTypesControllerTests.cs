@@ -80,6 +80,27 @@ namespace NextLevelBJJ.Tests.Integration.Controllers
 
             passTypeResponse.Should().Equals(passTypeFixture);
         }
+        
+        [Fact]
+        public async Task delete_passtype_should_remove_it()
+        {
+            var httpClient = _factory.CreateClient();
+
+            var passTypeFixture = _fixture.Create<PassTypeDto>();
+
+            var stringContent = new StringContent(JsonConvert.SerializeObject(passTypeFixture), Encoding.UTF8, "application/json");
+
+            var postResponse = await httpClient.PostAsync("api/passtypes", stringContent);
+
+            postResponse.EnsureSuccessStatusCode();
+            postResponse.StatusCode.Should().Be(HttpStatusCode.Created);
+
+            var response = await httpClient.DeleteAsync(postResponse.Headers.Location);
+
+            response.EnsureSuccessStatusCode();
+            response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+        }
+
     }
 }
 

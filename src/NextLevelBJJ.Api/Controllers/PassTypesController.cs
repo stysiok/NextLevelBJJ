@@ -3,6 +3,7 @@ using NextLevelBJJ.Application;
 using NextLevelBJJ.Application.PassTypes.Commands;
 using NextLevelBJJ.Application.PassTypes.DTO;
 using NextLevelBJJ.Application.PassTypes.Queries;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -46,6 +47,14 @@ namespace NextLevelBJJ.Api.Controllers
             await _dispatcher.SendAsync(command);
 
             return Created($"api/passtypes/{command.Id}", null);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await _dispatcher.SendAsync(new DeletePassType { Id = id });
+
+            return NoContent();
         }
     }
 }
