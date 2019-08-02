@@ -32,7 +32,7 @@ namespace NextLevelBJJ.Infrastructure.EF
             {
                 return;
             }
-
+            
             if (_options.Value.InMemory)
             {
                 optionsBuilder.UseInMemoryDatabase("NextLevelBJJ");
@@ -42,7 +42,7 @@ namespace NextLevelBJJ.Infrastructure.EF
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.AddShadowProperties();
-
+            modelBuilder.SetGlobalQueryFilters();
 
             base.OnModelCreating(modelBuilder);
         }

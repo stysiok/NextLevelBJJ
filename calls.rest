@@ -12,7 +12,10 @@ Content-Type: application/json
 }
 
 ###
-GET {{url}}/api/passtypes/{{guid}}
+GET {{url}}/api/passtypes/
+
+###
+DELETE {{url}}/api/passtypes/71b21932-cb99-4f4b-80cd-0e3ce239ea91
 
 ###
 POST {{url}}/api/students/sign-in

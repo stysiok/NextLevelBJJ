@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NextLevelBJJ.Core.Entities.Extensions
 {
-    public interface IActiviteFields
+    public interface IActiveField
     {
     }
 }

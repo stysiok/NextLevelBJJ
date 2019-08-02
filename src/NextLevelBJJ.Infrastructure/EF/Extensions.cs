@@ -49,7 +49,7 @@ namespace NextLevelBJJ.Infrastructure.EF
             {
                 var entityType = entityTypes.ClrType;
 
-                if (typeof(IActiviteFields).IsAssignableFrom(entityType))
+                if (typeof(IActiveField).IsAssignableFrom(entityType))
                 {
                     var method = SetIsActiveShadowPropertyMethodInfo.MakeGenericMethod(entityType);
                     method.Invoke(modelBuilder, new object[] { modelBuilder });
@@ -88,12 +88,30 @@ namespace NextLevelBJJ.Infrastructure.EF
                     }
                 }
 
-                if(entry.Entity is IActiviteFields && entry.State == EntityState.Deleted)
+                if(entry.Entity is IActiveField && entry.State == EntityState.Deleted)
                 {
                     entry.State = EntityState.Modified;
                     entry.Property("IsActive").CurrentValue = false;
                 }
+                else if(entry.Entity is IActiveField)
+                {
+                    entry.Property("IsActive").CurrentValue = true;
+                };
 
+            }
+        }
+
+        public static void SetGlobalQueryFilters(this ModelBuilder modelBuilder)
+        {
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                var type = entityType.ClrType;
+
+                if (typeof(IActiveField).IsAssignableFrom(type))
+                {
+                    var method = SetGlobalQueryFilterForActiveFieldMethodInfo.MakeGenericMethod(type);
+                    method.Invoke(modelBuilder, new object[] { modelBuilder });
+                }
             }
         }
 
@@ -115,11 +133,20 @@ namespace NextLevelBJJ.Infrastructure.EF
              }
         }
 
+        private static readonly MethodInfo SetGlobalQueryFilterForActiveFieldMethodInfo =
+            typeof(Extensions).GetMethods(BindingFlags.NonPublic | BindingFlags.Static)
+            .Single(t => t.IsGenericMethod && t.Name == "SetGlobalQueryFilterForActiveField");
+
+        private static void SetGlobalQueryFilterForActiveField<T>(ModelBuilder modelBuilder) where T : class, IActiveField
+        {
+            modelBuilder.Entity<T>().HasQueryFilter(e => Microsoft.EntityFrameworkCore.EF.Property<bool>(e, "IsActive"));
+        }
+
         private static readonly MethodInfo SetIsActiveShadowPropertyMethodInfo = 
             typeof(Extensions).GetMethods(BindingFlags.NonPublic | BindingFlags.Static)
             .Single(t => t.IsGenericMethod && t.Name == "SetIsActiveShadowProperty");
 
-        private static void SetIsActiveShadowProperty<T>(ModelBuilder builder) where T : class, IActiviteFields
+        private static void SetIsActiveShadowProperty<T>(ModelBuilder builder) where T : class, IActiveField
         {
             builder.Entity<T>().Property<bool>("IsActive");
         }
@@ -128,7 +155,7 @@ namespace NextLevelBJJ.Infrastructure.EF
             typeof(Extensions).GetMethods(BindingFlags.NonPublic | BindingFlags.Static)
             .Single(t => t.IsGenericMethod && t.Name == "SetAuditShadowProperties");
 
-        private static void SetAuditShadowProperties<T>(ModelBuilder builder) where T : class, IActiviteFields
+        private static void SetAuditShadowProperties<T>(ModelBuilder builder) where T : class, IActiveField
         {
             builder.Entity<T>().Property<DateTime>("CreatedDate").HasDefaultValueSql("GetUtcDate()");
             builder.Entity<T>().Property<DateTime>("ModifiedDate").HasDefaultValueSql("GetUtcDate()");
