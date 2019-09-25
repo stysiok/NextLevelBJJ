@@ -24,3 +24,6 @@ Content-Type: application/json
 {
     "Id": "233dd7e0-23a0-47b1-849c-d3b3ee9e4afe"
 }
+
+###
+GET {{url}}/api/passes/71b21932-cb99-4f4b-80cd-0e3ce239ea91
