@@ -32,4 +32,8 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="EF\Queries\Passes\" />
+    <Folder Include="EF\Queries\PassTypes\" />
+  </ItemGroup>
 </Project>

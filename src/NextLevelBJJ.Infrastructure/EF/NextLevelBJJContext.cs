@@ -19,6 +19,7 @@ namespace NextLevelBJJ.Infrastructure.EF
 
         public DbSet<PassType> PassTypes { get; set; }
         public DbSet<Student> Students { get; set; }
+        public DbSet<Pass> Passes { get; set; }
 
         public NextLevelBJJContext(IOptions<EfOptions> options, IHttpContextAccessor httpContextAccessor)
         {

@@ -1,10 +1,10 @@
 ﻿using System;
+using NextLevelBJJ.Application.Passes.DTO;
+
 namespace NextLevelBJJ.Application.Passes.Queries
 {
-    public class GetPass
+    public class GetPass : IQuery<PassDto>
     {
-        public GetPass()
-        {
-        }
+        public Guid Id { get; set; }
     }
 }

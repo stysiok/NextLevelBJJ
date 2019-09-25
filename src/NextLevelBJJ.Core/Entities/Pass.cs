@@ -13,7 +13,7 @@ namespace NextLevelBJJ.Core.Entities
         public Guid TypeId { get; private set; }
 
         public Student Student { get; private set; }
-        public PassType Type { get; private set; }
+        public PassType PassType { get; private set; }
         public ICollection<Attendance> Attendances { get; private set; }
     }
 }

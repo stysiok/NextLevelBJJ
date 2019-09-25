@@ -5,7 +5,7 @@ using NextLevelBJJ.Application.PassTypes.DTO;
 using NextLevelBJJ.Application.PassTypes.Queries;
 using System.Threading.Tasks;
 
-namespace NextLevelBJJ.Infrastructure.EF.Queries
+namespace NextLevelBJJ.Infrastructure.EF.Queries.PassTypes
 {
     public class GetPassTypeHandler : IQueryHandler<GetPassType, PassTypeDto>
     {

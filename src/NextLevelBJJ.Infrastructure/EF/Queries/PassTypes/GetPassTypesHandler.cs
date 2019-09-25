@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NextLevelBJJ.Infrastructure.EF.Queries
+namespace NextLevelBJJ.Infrastructure.EF.Queries.PassTypes  
 {
     public class GetPassTypesHandler : IQueryHandler<GetPassTypes, IEnumerable<PassTypeDto>>
     {

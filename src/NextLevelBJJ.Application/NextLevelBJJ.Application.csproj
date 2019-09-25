@@ -13,4 +13,10 @@
     <ProjectReference Include="..\NextLevelBJJ.Core\NextLevelBJJ.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Passes\" />
+    <Folder Include="Passes\DTO\" />
+    <Folder Include="Passes\Queries\" />
+    <Folder Include="Passes\Queries\Validators\" />
+  </ItemGroup>
 </Project>
