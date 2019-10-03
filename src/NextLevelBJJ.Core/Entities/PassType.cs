@@ -12,6 +12,7 @@ namespace NextLevelBJJ.Core.Entities
         public decimal Price { get; private set; }
         public int Entries { get; private set; }
         public bool IsOpen { get; private set; }
+        public ICollection<Pass> Passes { get; private set; }
 
         private PassType()
         {
