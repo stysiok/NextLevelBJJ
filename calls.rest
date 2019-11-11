@@ -1,7 +1,9 @@
-@url = http://localhost:2243
+@url = https://localhost:5001
+@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkODFkOGY5YjU4NGM0NWJmYjQ1ODEyMzRhZTYxMDhiZSIsInVuaXF1ZV9uYW1lIjoiZDgxZDhmOWI1ODRjNDViZmI0NTgxMjM0YWU2MTA4YmUiLCJqdGkiOiI2NjQ4Yzg4MC0yNmJjLTQzZjktYTg3ZC0yODBkODUxNjMwYWYiLCJpYXQiOiIxNTcyOTc5OTM4IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJuYmYiOjE1NzI5Nzk5MzgsImV4cCI6MTU3Mjk4MzUzOCwiaXNzIjoibWFya2V0In0.klvAOi79JrpNWVOO_T2voo2UKzrlhnggP0KH0uau9CU
 
 ###
 POST {{url}}/api/passtypes
+Authorization: Bearer {{jwt}}
 Content-Type: application/json
 
 {
@@ -15,14 +17,15 @@ Content-Type: application/json
 GET {{url}}/api/passtypes/
 
 ###
-DELETE {{url}}/api/passtypes/71b21932-cb99-4f4b-80cd-0e3ce239ea91
+DELETE {{url}}/api/passtypes/d73784d0-1591-4c92-a96e-c7f8bd71ee4c
+Authorization: Bearer {{jwt}}
 
 ###
 POST {{url}}/api/students/sign-in
 Content-Type: application/json
 
 {
-    "Id": "233dd7e0-23a0-47b1-849c-d3b3ee9e4afe"
+    "Id": "d81d8f9b-584c-45bf-b458-1234ae6108be"
 }
 
 ###

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NextLevelBJJ.Application;
 using NextLevelBJJ.Application.PassTypes.Commands;
 using NextLevelBJJ.Application.PassTypes.DTO;
@@ -42,6 +43,7 @@ namespace NextLevelBJJ.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(AuthenticationSchemes = "Bearer", Policy = "Admin")]
         public async Task<IActionResult> Post(CreatePassType command)
         {
             await _dispatcher.SendAsync(command);
@@ -50,6 +52,7 @@ namespace NextLevelBJJ.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = "Bearer", Policy = "Admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
             await _dispatcher.SendAsync(new DeletePassType { Id = id });

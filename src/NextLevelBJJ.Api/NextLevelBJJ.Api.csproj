@@ -22,4 +22,13 @@
     <ProjectReference Include="..\NextLevelBJJ.Infrastructure\NextLevelBJJ.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\20191029091717_inital.cs" />
+    <Compile Remove="Migrations\20191029091717_inital.Designer.cs" />
+    <Compile Remove="Migrations\20191029095444_conversion2.cs" />
+    <Compile Remove="Migrations\20191029095444_conversion2.Designer.cs" />
+    <Compile Remove="Migrations\NextLevelBJJContextModelSnapshot.cs" />
+    <Compile Remove="Migrations\20191029092735_conversions.cs" />
+    <Compile Remove="Migrations\20191029092735_conversions.Designer.cs" />
+  </ItemGroup>
 </Project>

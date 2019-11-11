@@ -19,7 +19,7 @@ namespace NextLevelBJJ.Infrastructure.Dispatchers
             _userId = httpContextAccessor.HttpContext.User?.Identity?.IsAuthenticated == true ? Guid.Parse(httpContextAccessor.HttpContext.User.Identity.Name) : Guid.Empty;
         }
 
-        public Task SendAsync<T>(T command) where T : ICommand
+        public async Task SendAsync<T>(T command) where T : ICommand
         {
             using (var scope = _serviceProvider.CreateScope())
             {
@@ -29,18 +29,18 @@ namespace NextLevelBJJ.Infrastructure.Dispatchers
                 }
 
                 var handler = scope.ServiceProvider.GetRequiredService<ICommandHandler<T>>();
-                return handler.HandleAsync(command);
+                await handler.HandleAsync(command);
             }
         }
 
-        public Task<T> QueryAsync<T>(IQuery<T> query)
+        public async Task<T> QueryAsync<T>(IQuery<T> query)
         {
-            using(var scope = _serviceProvider.CreateScope())
+            using (var scope = _serviceProvider.CreateScope())
             {
                 var handlerType = typeof(IQueryHandler<,>).MakeGenericType(query.GetType(), typeof(T));
                 dynamic handler = scope.ServiceProvider.GetRequiredService(handlerType);
 
-                return handler.HandleAsync((dynamic)query);
+                return await handler.HandleAsync((dynamic)query);
             }
         }
     }

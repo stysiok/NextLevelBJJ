@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace NextLevelBJJ.Api.Migrations
 {
-    public partial class initial : Migration
+    public partial class initla : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,21 +11,21 @@ namespace NextLevelBJJ.Api.Migrations
                 name: "Students",
                 columns: table => new
                 {
-                    Id = table.Column<byte[]>(nullable: false),
-                    Role = table.Column<string>(nullable: true),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    PassCode = table.Column<byte[]>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
+                    Role = table.Column<string>(nullable: false),
+                    FirstName = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: false),
+                    PassCode = table.Column<Guid>(nullable: false),
                     Gender = table.Column<int>(nullable: false),
                     BirthDate = table.Column<DateTime>(nullable: false),
                     Address = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<int>(nullable: false),
                     Email = table.Column<string>(nullable: true),
-                    HasDeclaration = table.Column<short>(nullable: false),
-                    CreatedBy = table.Column<byte[]>(nullable: false),
+                    HasDeclaration = table.Column<bool>(nullable: false),
+                    CreatedBy = table.Column<Guid>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
-                    IsActive = table.Column<short>(nullable: false),
-                    ModifiedBy = table.Column<byte[]>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false),
+                    ModifiedBy = table.Column<Guid>(nullable: false),
                     ModifiedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -36,28 +36,28 @@ namespace NextLevelBJJ.Api.Migrations
                         column: x => x.CreatedBy,
                         principalTable: "Students",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Students_Students_ModifiedBy",
                         column: x => x.ModifiedBy,
                         principalTable: "Students",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "PassTypes",
                 columns: table => new
                 {
-                    Id = table.Column<byte[]>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
+                    Id = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
                     Price = table.Column<decimal>(nullable: false),
                     Entries = table.Column<int>(nullable: false),
-                    IsOpen = table.Column<short>(nullable: false),
-                    CreatedBy = table.Column<byte[]>(nullable: false),
+                    IsOpen = table.Column<bool>(nullable: false),
+                    CreatedBy = table.Column<Guid>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
-                    IsActive = table.Column<short>(nullable: false),
-                    ModifiedBy = table.Column<byte[]>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false),
+                    ModifiedBy = table.Column<Guid>(nullable: false),
                     ModifiedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -68,28 +68,28 @@ namespace NextLevelBJJ.Api.Migrations
                         column: x => x.CreatedBy,
                         principalTable: "Students",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_PassTypes_Students_ModifiedBy",
                         column: x => x.ModifiedBy,
                         principalTable: "Students",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Training",
                 columns: table => new
                 {
-                    Id = table.Column<byte[]>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
+                    Id = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
                     StartHour = table.Column<TimeSpan>(nullable: false),
                     FinishHour = table.Column<TimeSpan>(nullable: false),
-                    IsKidsTraining = table.Column<short>(nullable: false),
-                    CreatedBy = table.Column<byte[]>(nullable: false),
+                    IsKidsTraining = table.Column<bool>(nullable: false),
+                    CreatedBy = table.Column<Guid>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
-                    IsActive = table.Column<short>(nullable: false),
-                    ModifiedBy = table.Column<byte[]>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false),
+                    ModifiedBy = table.Column<Guid>(nullable: false),
                     ModifiedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -100,29 +100,29 @@ namespace NextLevelBJJ.Api.Migrations
                         column: x => x.CreatedBy,
                         principalTable: "Students",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Training_Students_ModifiedBy",
                         column: x => x.ModifiedBy,
                         principalTable: "Students",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Passes",
                 columns: table => new
                 {
-                    Id = table.Column<byte[]>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     ExpirationDate = table.Column<DateTime>(nullable: false),
-                    StudentId = table.Column<byte[]>(nullable: false),
+                    StudentId = table.Column<Guid>(nullable: false),
                     Price = table.Column<int>(nullable: false),
-                    TypeId = table.Column<byte[]>(nullable: false),
-                    PassTypeId = table.Column<byte[]>(nullable: true),
-                    CreatedBy = table.Column<byte[]>(nullable: false),
+                    TypeId = table.Column<Guid>(nullable: false),
+                    PassTypeId = table.Column<Guid>(nullable: false),
+                    CreatedBy = table.Column<Guid>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
-                    IsActive = table.Column<short>(nullable: false),
-                    ModifiedBy = table.Column<byte[]>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false),
+                    ModifiedBy = table.Column<Guid>(nullable: false),
                     ModifiedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -133,13 +133,13 @@ namespace NextLevelBJJ.Api.Migrations
                         column: x => x.CreatedBy,
                         principalTable: "Students",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Passes_Students_ModifiedBy",
                         column: x => x.ModifiedBy,
                         principalTable: "Students",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Passes_PassTypes_PassTypeId",
                         column: x => x.PassTypeId,
@@ -151,22 +151,22 @@ namespace NextLevelBJJ.Api.Migrations
                         column: x => x.StudentId,
                         principalTable: "Students",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Attendance",
                 columns: table => new
                 {
-                    Id = table.Column<byte[]>(nullable: false),
-                    IsFree = table.Column<short>(nullable: false),
-                    PassId = table.Column<byte[]>(nullable: true),
-                    StudentId = table.Column<byte[]>(nullable: true),
-                    TrainingId = table.Column<byte[]>(nullable: true),
-                    CreatedBy = table.Column<byte[]>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
+                    IsFree = table.Column<bool>(nullable: false),
+                    PassId = table.Column<Guid>(nullable: false),
+                    StudentId = table.Column<Guid>(nullable: false),
+                    TrainingId = table.Column<Guid>(nullable: false),
+                    CreatedBy = table.Column<Guid>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
-                    IsActive = table.Column<short>(nullable: false),
-                    ModifiedBy = table.Column<byte[]>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false),
+                    ModifiedBy = table.Column<Guid>(nullable: false),
                     ModifiedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -177,13 +177,13 @@ namespace NextLevelBJJ.Api.Migrations
                         column: x => x.CreatedBy,
                         principalTable: "Students",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Attendance_Students_ModifiedBy",
                         column: x => x.ModifiedBy,
                         principalTable: "Students",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Attendance_Passes_PassId",
                         column: x => x.PassId,
@@ -260,14 +260,34 @@ namespace NextLevelBJJ.Api.Migrations
                 column: "ModifiedBy");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Students_Address",
+                table: "Students",
+                column: "Address",
+                unique: true,
+                filter: "[Address] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Students_CreatedBy",
                 table: "Students",
                 column: "CreatedBy");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Students_Email",
+                table: "Students",
+                column: "Email",
+                unique: true,
+                filter: "[Email] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Students_ModifiedBy",
                 table: "Students",
                 column: "ModifiedBy");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Students_PassCode",
+                table: "Students",
+                column: "PassCode",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Training_CreatedBy",

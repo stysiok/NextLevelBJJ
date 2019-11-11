@@ -45,7 +45,11 @@ namespace NextLevelBJJ.Infrastructure.EF.Queries.PassTypes
                 passTypes = passTypes.Where(pt => pt.Price >= query.MinPrice);
 
 
-            return await passTypes.Select(pt => _mapper.Map<PassTypeDto>(pt)).ToListAsync();
+            var data = await passTypes.ToListAsync();
+
+            var map = _mapper.Map<List<PassTypeDto>>(data);
+
+            return map;
         }
     }
 }

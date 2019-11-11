@@ -1,11 +1,15 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Options;
 using NextLevelBJJ.Core.Entities;
 using NextLevelBJJ.Core.Entities.Extensions;
+using NextLevelBJJ.Infrastructure.EF.Configurations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +25,7 @@ namespace NextLevelBJJ.Infrastructure.EF
         public DbSet<Student> Students { get; set; }
         public DbSet<Pass> Passes { get; set; }
 
-        public NextLevelBJJContext(IOptions<EfOptions> options, IHttpContextAccessor httpContextAccessor)
+        public NextLevelBJJContext(DbContextOptions<NextLevelBJJContext> dbOptions, IOptions<EfOptions> options, IHttpContextAccessor httpContextAccessor) : base(dbOptions)
         {
             _options = options;
             _httpContextAccessor = httpContextAccessor;
@@ -33,19 +37,31 @@ namespace NextLevelBJJ.Infrastructure.EF
             {
                 return;
             }
-            
+
             if (_options.Value.InMemory)
             {
-                optionsBuilder.UseInMemoryDatabase("NextLevelBJJ");
+               optionsBuilder.UseInMemoryDatabase("NextLevelBJJ");
+               return;
             }
+
+            optionsBuilder.UseSqlServer(
+                _options.Value.ConnectionString,
+                connection => connection.MigrationsAssembly("NextLevelBJJ.Api")
+            );
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.AddShadowProperties();
-            modelBuilder.SetGlobalQueryFilters();
 
             base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new AttendanceConfiguration());
+            modelBuilder.ApplyConfiguration(new PassConfiguration());
+            modelBuilder.ApplyConfiguration(new PassTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new StudentConfiguration());
+            modelBuilder.ApplyConfiguration(new TrainingConfiguration());
+
+            modelBuilder.AddShadowProperties();
+            modelBuilder.SetGlobalQueryFilters();
         }
 
         public override int SaveChanges()
@@ -54,10 +70,10 @@ namespace NextLevelBJJ.Infrastructure.EF
             return base.SaveChanges();
         }
 
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             ChangeTracker.SetShadowProperties(_httpContextAccessor);
-            return base.SaveChangesAsync(cancellationToken);
+            return await base.SaveChangesAsync(cancellationToken);
         }
     }
 }

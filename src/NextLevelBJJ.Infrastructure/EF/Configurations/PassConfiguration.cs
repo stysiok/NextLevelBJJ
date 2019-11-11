@@ -13,13 +13,16 @@ namespace NextLevelBJJ.Infrastructure.EF.Configurations
 
             builder.HasOne(p => p.PassType)
                 .WithMany(pt => pt.Passes)
-                .IsRequired();
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
             builder.HasMany(p => p.Attendances)
                 .WithOne(a => a.Pass)
-                .IsRequired();
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
             builder.HasOne(p => p.Student)
                 .WithMany(s => s.Passes)
-                .IsRequired();
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Property(p => p.ExpirationDate)
                 .IsRequired();

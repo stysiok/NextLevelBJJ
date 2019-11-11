@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NextLevelBJJ.Core.Entities;
 
 namespace NextLevelBJJ.Infrastructure.EF.Configurations
@@ -13,7 +14,8 @@ namespace NextLevelBJJ.Infrastructure.EF.Configurations
 
             builder.HasMany<Pass>(pt => pt.Passes)
                 .WithOne(p => p.PassType)
-                .IsRequired();
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Property(pt => pt.Name)
                 .IsRequired();

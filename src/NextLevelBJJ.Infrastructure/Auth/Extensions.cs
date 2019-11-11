@@ -36,9 +36,9 @@ namespace NextLevelBJJ.Infrastructure.Auth
                 };
             });
 
-            services.AddAuthorization(cfg => cfg.AddPolicy("admin", ap => ap
-                .RequireAuthenticatedUser()
-                .RequireRole("admin"))
+            services.AddAuthorization(cfg => cfg.AddPolicy("Admin", 
+                ap => ap.RequireAuthenticatedUser()
+                    .RequireRole("Admin"))
             );
 
             services.AddSingleton<IJwtProvider, JwtProvider>();

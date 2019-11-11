@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NextLevelBJJ.Core.Entities
 {
-    public class Student
+    public class Student : IActiveField, IAuditFields
     {
         public Guid Id { get; private set; }
         public string Role { get; private set; }
@@ -24,7 +24,8 @@ namespace NextLevelBJJ.Core.Entities
 
         private Student()
         {
-
+            Attendances = new HashSet<Attendance>();
+            Passes = new HashSet<Pass>();
         }
 
         public Student(Guid id, string role, string firstName, string lastName, Guid passCode, Gender gender, DateTime birthDate, string address, int phoneNumber, string email, bool hasDeclaration)

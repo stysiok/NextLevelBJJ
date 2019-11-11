@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NextLevelBJJ.Core.Entities;
@@ -8,10 +9,8 @@ using NextLevelBJJ.Core.Entities.Extensions;
 using NextLevelBJJ.Core.Repositories;
 using NextLevelBJJ.Infrastructure.EF.Repositories;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace NextLevelBJJ.Infrastructure.EF
 {
@@ -30,15 +29,10 @@ namespace NextLevelBJJ.Infrastructure.EF
 
             services.Configure<EfOptions>(configuration.GetSection("ef"));
             services.AddHttpContextAccessor();
-            services.AddEntityFrameworkSqlServer()
+            services
+                .AddEntityFrameworkSqlServer()
                 .AddEntityFrameworkInMemoryDatabase()
                 .AddDbContext<NextLevelBJJContext>();
-
-            if (configuration.GetSection("ef").GetValue<bool>("seedData"))
-            {
-                services.SeedData();
-            }
-
 
             return services;
         }
@@ -68,10 +62,10 @@ namespace NextLevelBJJ.Infrastructure.EF
             changeTracker.DetectChanges();
 
             var timestamp = DateTime.UtcNow;
-            var currentUserId = httpContextAccessor.HttpContext?.User?.Identity?.IsAuthenticated == true ? 
-                Guid.Parse(httpContextAccessor.HttpContext.User.Identity.Name) : Guid.Empty;
+            var currentUserId = httpContextAccessor.HttpContext?.User?.Identity?.IsAuthenticated == true ?
+                Guid.Parse(httpContextAccessor.HttpContext.User.Identity.Name) : Guid.Parse("d81d8f9b-584c-45bf-b458-1234ae6108be");//Guid.Empty;
 
-            foreach(var entry in changeTracker.Entries())
+            foreach (var entry in changeTracker.Entries())
             {
                 if(entry.Entity is IAuditFields)
                 {
@@ -96,7 +90,7 @@ namespace NextLevelBJJ.Infrastructure.EF
                 else if(entry.Entity is IActiveField)
                 {
                     entry.Property("IsActive").CurrentValue = true;
-                };
+                }
 
             }
         }
@@ -148,7 +142,8 @@ namespace NextLevelBJJ.Infrastructure.EF
 
         private static void SetIsActiveShadowProperty<T>(ModelBuilder builder) where T : class, IActiveField
         {
-            builder.Entity<T>().Property<bool>("IsActive");
+            builder.Entity<T>()
+                .Property<bool>("IsActive");
         }
 
         private static readonly MethodInfo SetAuditShadowPropertiesMethodInfo =
@@ -157,8 +152,8 @@ namespace NextLevelBJJ.Infrastructure.EF
 
         private static void SetAuditShadowProperties<T>(ModelBuilder builder) where T : class, IActiveField
         {
-            builder.Entity<T>().Property<DateTime>("CreatedDate").HasDefaultValueSql("GetUtcDate()");
-            builder.Entity<T>().Property<DateTime>("ModifiedDate").HasDefaultValueSql("GetUtcDate()");
+            builder.Entity<T>().Property<DateTime>("CreatedDate");
+            builder.Entity<T>().Property<DateTime>("ModifiedDate");
             builder.Entity<T>().Property<Guid>("CreatedBy");
             builder.Entity<T>().Property<Guid>("ModifiedBy");
             

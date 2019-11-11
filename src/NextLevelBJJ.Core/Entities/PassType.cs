@@ -16,6 +16,7 @@ namespace NextLevelBJJ.Core.Entities
 
         private PassType()
         {
+            Passes = new HashSet<Pass>();
         }
 
         public PassType(Guid id, string name, decimal price, int entries, bool isOpen)

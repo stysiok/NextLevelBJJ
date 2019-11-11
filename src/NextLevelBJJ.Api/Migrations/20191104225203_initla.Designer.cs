@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NextLevelBJJ.Infrastructure.EF;
@@ -9,24 +10,23 @@ using NextLevelBJJ.Infrastructure.EF;
 namespace NextLevelBJJ.Api.Migrations
 {
     [DbContext(typeof(NextLevelBJJContext))]
-    [Migration("20191029101530_initial")]
-    partial class initial
+    [Migration("20191104225203_initla")]
+    partial class initla
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("NextLevelBJJ.Core.Entities.Attendance", b =>
                 {
-                    b.Property<byte[]>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasConversion(new ValueConverter<byte[], byte[]>(v => default(byte[]), v => default(byte[]), new ConverterMappingHints(size: 16)));
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<byte[]>("CreatedBy")
-                        .IsRequired()
-                        .HasConversion(new ValueConverter<byte[], byte[]>(v => default(byte[]), v => default(byte[]), new ConverterMappingHints(size: 16)));
+                    b.Property<Guid>("CreatedBy");
 
                     b.Property<DateTime>("CreatedDate");
 
@@ -34,20 +34,15 @@ namespace NextLevelBJJ.Api.Migrations
 
                     b.Property<bool>("IsFree");
 
-                    b.Property<byte[]>("ModifiedBy")
-                        .IsRequired()
-                        .HasConversion(new ValueConverter<byte[], byte[]>(v => default(byte[]), v => default(byte[]), new ConverterMappingHints(size: 16)));
+                    b.Property<Guid>("ModifiedBy");
 
                     b.Property<DateTime>("ModifiedDate");
 
-                    b.Property<byte[]>("PassId")
-                        .HasConversion(new ValueConverter<byte[], byte[]>(v => default(byte[]), v => default(byte[]), new ConverterMappingHints(size: 16)));
+                    b.Property<Guid>("PassId");
 
-                    b.Property<byte[]>("StudentId")
-                        .HasConversion(new ValueConverter<byte[], byte[]>(v => default(byte[]), v => default(byte[]), new ConverterMappingHints(size: 16)));
+                    b.Property<Guid>("StudentId");
 
-                    b.Property<byte[]>("TrainingId")
-                        .HasConversion(new ValueConverter<byte[], byte[]>(v => default(byte[]), v => default(byte[]), new ConverterMappingHints(size: 16)));
+                    b.Property<Guid>("TrainingId");
 
                     b.HasKey("Id");
 
@@ -66,13 +61,10 @@ namespace NextLevelBJJ.Api.Migrations
 
             modelBuilder.Entity("NextLevelBJJ.Core.Entities.Pass", b =>
                 {
-                    b.Property<byte[]>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasConversion(new ValueConverter<byte[], byte[]>(v => default(byte[]), v => default(byte[]), new ConverterMappingHints(size: 16)));
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<byte[]>("CreatedBy")
-                        .IsRequired()
-                        .HasConversion(new ValueConverter<byte[], byte[]>(v => default(byte[]), v => default(byte[]), new ConverterMappingHints(size: 16)));
+                    b.Property<Guid>("CreatedBy");
 
                     b.Property<DateTime>("CreatedDate");
 
@@ -80,24 +72,17 @@ namespace NextLevelBJJ.Api.Migrations
 
                     b.Property<bool>("IsActive");
 
-                    b.Property<byte[]>("ModifiedBy")
-                        .IsRequired()
-                        .HasConversion(new ValueConverter<byte[], byte[]>(v => default(byte[]), v => default(byte[]), new ConverterMappingHints(size: 16)));
+                    b.Property<Guid>("ModifiedBy");
 
                     b.Property<DateTime>("ModifiedDate");
 
-                    b.Property<byte[]>("PassTypeId")
-                        .HasConversion(new ValueConverter<byte[], byte[]>(v => default(byte[]), v => default(byte[]), new ConverterMappingHints(size: 16)));
+                    b.Property<Guid>("PassTypeId");
 
                     b.Property<int>("Price");
 
-                    b.Property<byte[]>("StudentId")
-                        .IsRequired()
-                        .HasConversion(new ValueConverter<byte[], byte[]>(v => default(byte[]), v => default(byte[]), new ConverterMappingHints(size: 16)));
+                    b.Property<Guid>("StudentId");
 
-                    b.Property<byte[]>("TypeId")
-                        .IsRequired()
-                        .HasConversion(new ValueConverter<byte[], byte[]>(v => default(byte[]), v => default(byte[]), new ConverterMappingHints(size: 16)));
+                    b.Property<Guid>("TypeId");
 
                     b.HasKey("Id");
 
@@ -114,13 +99,10 @@ namespace NextLevelBJJ.Api.Migrations
 
             modelBuilder.Entity("NextLevelBJJ.Core.Entities.PassType", b =>
                 {
-                    b.Property<byte[]>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasConversion(new ValueConverter<byte[], byte[]>(v => default(byte[]), v => default(byte[]), new ConverterMappingHints(size: 16)));
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<byte[]>("CreatedBy")
-                        .IsRequired()
-                        .HasConversion(new ValueConverter<byte[], byte[]>(v => default(byte[]), v => default(byte[]), new ConverterMappingHints(size: 16)));
+                    b.Property<Guid>("CreatedBy");
 
                     b.Property<DateTime>("CreatedDate");
 
@@ -130,13 +112,12 @@ namespace NextLevelBJJ.Api.Migrations
 
                     b.Property<bool>("IsOpen");
 
-                    b.Property<byte[]>("ModifiedBy")
-                        .IsRequired()
-                        .HasConversion(new ValueConverter<byte[], byte[]>(v => default(byte[]), v => default(byte[]), new ConverterMappingHints(size: 16)));
+                    b.Property<Guid>("ModifiedBy");
 
                     b.Property<DateTime>("ModifiedDate");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<decimal>("Price");
 
@@ -151,23 +132,21 @@ namespace NextLevelBJJ.Api.Migrations
 
             modelBuilder.Entity("NextLevelBJJ.Core.Entities.Student", b =>
                 {
-                    b.Property<byte[]>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasConversion(new ValueConverter<byte[], byte[]>(v => default(byte[]), v => default(byte[]), new ConverterMappingHints(size: 16)));
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Address");
 
                     b.Property<DateTime>("BirthDate");
 
-                    b.Property<byte[]>("CreatedBy")
-                        .IsRequired()
-                        .HasConversion(new ValueConverter<byte[], byte[]>(v => default(byte[]), v => default(byte[]), new ConverterMappingHints(size: 16)));
+                    b.Property<Guid>("CreatedBy");
 
                     b.Property<DateTime>("CreatedDate");
 
                     b.Property<string>("Email");
 
-                    b.Property<string>("FirstName");
+                    b.Property<string>("FirstName")
+                        .IsRequired();
 
                     b.Property<int>("Gender");
 
@@ -175,40 +154,46 @@ namespace NextLevelBJJ.Api.Migrations
 
                     b.Property<bool>("IsActive");
 
-                    b.Property<string>("LastName");
+                    b.Property<string>("LastName")
+                        .IsRequired();
 
-                    b.Property<byte[]>("ModifiedBy")
-                        .IsRequired()
-                        .HasConversion(new ValueConverter<byte[], byte[]>(v => default(byte[]), v => default(byte[]), new ConverterMappingHints(size: 16)));
+                    b.Property<Guid>("ModifiedBy");
 
                     b.Property<DateTime>("ModifiedDate");
 
-                    b.Property<byte[]>("PassCode")
-                        .IsRequired()
-                        .HasConversion(new ValueConverter<byte[], byte[]>(v => default(byte[]), v => default(byte[]), new ConverterMappingHints(size: 16)));
+                    b.Property<Guid>("PassCode");
 
                     b.Property<int>("PhoneNumber");
 
-                    b.Property<string>("Role");
+                    b.Property<string>("Role")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Address")
+                        .IsUnique()
+                        .HasFilter("[Address] IS NOT NULL");
+
                     b.HasIndex("CreatedBy");
 
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasFilter("[Email] IS NOT NULL");
+
                     b.HasIndex("ModifiedBy");
+
+                    b.HasIndex("PassCode")
+                        .IsUnique();
 
                     b.ToTable("Students");
                 });
 
             modelBuilder.Entity("NextLevelBJJ.Core.Entities.Training", b =>
                 {
-                    b.Property<byte[]>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasConversion(new ValueConverter<byte[], byte[]>(v => default(byte[]), v => default(byte[]), new ConverterMappingHints(size: 16)));
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<byte[]>("CreatedBy")
-                        .IsRequired()
-                        .HasConversion(new ValueConverter<byte[], byte[]>(v => default(byte[]), v => default(byte[]), new ConverterMappingHints(size: 16)));
+                    b.Property<Guid>("CreatedBy");
 
                     b.Property<DateTime>("CreatedDate");
 
@@ -218,13 +203,12 @@ namespace NextLevelBJJ.Api.Migrations
 
                     b.Property<bool>("IsKidsTraining");
 
-                    b.Property<byte[]>("ModifiedBy")
-                        .IsRequired()
-                        .HasConversion(new ValueConverter<byte[], byte[]>(v => default(byte[]), v => default(byte[]), new ConverterMappingHints(size: 16)));
+                    b.Property<Guid>("ModifiedBy");
 
                     b.Property<DateTime>("ModifiedDate");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<TimeSpan>("StartHour");
 
@@ -242,24 +226,27 @@ namespace NextLevelBJJ.Api.Migrations
                     b.HasOne("NextLevelBJJ.Core.Entities.Student")
                         .WithMany()
                         .HasForeignKey("CreatedBy")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("NextLevelBJJ.Core.Entities.Student")
                         .WithMany()
                         .HasForeignKey("ModifiedBy")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("NextLevelBJJ.Core.Entities.Pass", "Pass")
                         .WithMany("Attendances")
-                        .HasForeignKey("PassId");
+                        .HasForeignKey("PassId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("NextLevelBJJ.Core.Entities.Student", "Student")
                         .WithMany("Attendances")
-                        .HasForeignKey("StudentId");
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("NextLevelBJJ.Core.Entities.Training", "Training")
                         .WithMany("Attendances")
-                        .HasForeignKey("TrainingId");
+                        .HasForeignKey("TrainingId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("NextLevelBJJ.Core.Entities.Pass", b =>
@@ -267,21 +254,22 @@ namespace NextLevelBJJ.Api.Migrations
                     b.HasOne("NextLevelBJJ.Core.Entities.Student")
                         .WithMany()
                         .HasForeignKey("CreatedBy")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("NextLevelBJJ.Core.Entities.Student")
                         .WithMany()
                         .HasForeignKey("ModifiedBy")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("NextLevelBJJ.Core.Entities.PassType", "PassType")
                         .WithMany("Passes")
-                        .HasForeignKey("PassTypeId");
+                        .HasForeignKey("PassTypeId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("NextLevelBJJ.Core.Entities.Student", "Student")
                         .WithMany("Passes")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("NextLevelBJJ.Core.Entities.PassType", b =>
@@ -289,12 +277,12 @@ namespace NextLevelBJJ.Api.Migrations
                     b.HasOne("NextLevelBJJ.Core.Entities.Student")
                         .WithMany()
                         .HasForeignKey("CreatedBy")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("NextLevelBJJ.Core.Entities.Student")
                         .WithMany()
                         .HasForeignKey("ModifiedBy")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("NextLevelBJJ.Core.Entities.Student", b =>
@@ -302,12 +290,12 @@ namespace NextLevelBJJ.Api.Migrations
                     b.HasOne("NextLevelBJJ.Core.Entities.Student")
                         .WithMany()
                         .HasForeignKey("CreatedBy")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("NextLevelBJJ.Core.Entities.Student")
                         .WithMany()
                         .HasForeignKey("ModifiedBy")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("NextLevelBJJ.Core.Entities.Training", b =>
@@ -315,12 +303,12 @@ namespace NextLevelBJJ.Api.Migrations
                     b.HasOne("NextLevelBJJ.Core.Entities.Student")
                         .WithMany()
                         .HasForeignKey("CreatedBy")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("NextLevelBJJ.Core.Entities.Student")
                         .WithMany()
                         .HasForeignKey("ModifiedBy")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }
